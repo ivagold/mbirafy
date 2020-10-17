@@ -2,11 +2,13 @@
 //  MuseScore
 //  Music Composition & Notation
 //
-//  Note Names Plugin
+//  Mbirafy - a fork of the Note Names Plugin
+//  https://github.com/ivagold/mbirafy
 //
 //  Copyright (C) 2012 Werner Schweer
 //  Copyright (C) 2013 - 2019 Joachim Schmitz
 //  Copyright (C) 2014 Jörn Eichler
+//  Copyright (C) 2020 Iva Goldsmith
 //
 //  This program is free software; you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License version 2
@@ -19,100 +21,46 @@ import MuseScore 3.0
 
 MuseScore {
    version: "3.0"
-   description: qsTr("This plugin names notes as per your language setting")
-   menuPath: "Plugins.Notes." + qsTr("Note Names") // this does not work, why?
+   description: qsTr("This plugin labels notes with mbira tablature.")
+   menuPath: "Plugins.Notes." + qsTr("Mbirafy") // Does this work?
 
    function nameChord (notes, text) {
       for (var i = 0; i < notes.length; i++) {
-         var sep = ","; // change to "\n" if you want them vertically
+         //var sep = "," // change to "\n" if you want them vertically
+         var sep = "\n";
+
          if ( i > 0 )
             text.text = sep + text.text; // any but top note
 
-         if (typeof notes[i].tpc === "undefined") // like for grace notes ?!?
+         if (typeof notes[i].pitch === "undefined") // like for grace notes ?!?
             return
-         switch (notes[i].tpc) {
-            case -1: text.text = qsTranslate("InspectorAmbitus", "F♭♭") + text.text; break;
-            case  0: text.text = qsTranslate("InspectorAmbitus", "C♭♭") + text.text; break;
-            case  1: text.text = qsTranslate("InspectorAmbitus", "G♭♭") + text.text; break;
-            case  2: text.text = qsTranslate("InspectorAmbitus", "D♭♭") + text.text; break;
-            case  3: text.text = qsTranslate("InspectorAmbitus", "A♭♭") + text.text; break;
-            case  4: text.text = qsTranslate("InspectorAmbitus", "E♭♭") + text.text; break;
-            case  5: text.text = qsTranslate("InspectorAmbitus", "B♭♭") + text.text; break;
-            case  6: text.text = qsTranslate("InspectorAmbitus", "F♭")  + text.text; break;
-            case  7: text.text = qsTranslate("InspectorAmbitus", "C♭")  + text.text; break;
 
-            case  8: text.text = qsTranslate("InspectorAmbitus", "G♭")  + text.text; break;
-            case  9: text.text = qsTranslate("InspectorAmbitus", "D♭")  + text.text; break;
-            case 10: text.text = qsTranslate("InspectorAmbitus", "A♭")  + text.text; break;
-            case 11: text.text = qsTranslate("InspectorAmbitus", "E♭")  + text.text; break;
-            case 12: text.text = qsTranslate("InspectorAmbitus", "B♭")  + text.text; break;
-            case 13: text.text = qsTranslate("InspectorAmbitus", "F")   + text.text; break;
-            case 14: text.text = qsTranslate("InspectorAmbitus", "C")   + text.text; break;
-            case 15: text.text = qsTranslate("InspectorAmbitus", "G")   + text.text; break;
-            case 16: text.text = qsTranslate("InspectorAmbitus", "D")   + text.text; break;
-            case 17: text.text = qsTranslate("InspectorAmbitus", "A")   + text.text; break;
-            case 18: text.text = qsTranslate("InspectorAmbitus", "E")   + text.text; break;
-            case 19: text.text = qsTranslate("InspectorAmbitus", "B")   + text.text; break;
+         // To determine what pitch values to use, refer to this chart:
+         // https://musescore.github.io/MuseScore_PluginAPI_Docs/plugins/html/pitch.html
 
-            case 20: text.text = qsTranslate("InspectorAmbitus", "F♯")  + text.text; break;
-            case 21: text.text = qsTranslate("InspectorAmbitus", "C♯")  + text.text; break;
-            case 22: text.text = qsTranslate("InspectorAmbitus", "G♯")  + text.text; break;
-            case 23: text.text = qsTranslate("InspectorAmbitus", "D♯")  + text.text; break;
-            case 24: text.text = qsTranslate("InspectorAmbitus", "A♯")  + text.text; break;
-            case 25: text.text = qsTranslate("InspectorAmbitus", "E♯")  + text.text; break;
-            case 26: text.text = qsTranslate("InspectorAmbitus", "B♯")  + text.text; break;
-            case 27: text.text = qsTranslate("InspectorAmbitus", "F♯♯") + text.text; break;
-            case 28: text.text = qsTranslate("InspectorAmbitus", "C♯♯") + text.text; break;
-            case 29: text.text = qsTranslate("InspectorAmbitus", "G♯♯") + text.text; break;
-            case 30: text.text = qsTranslate("InspectorAmbitus", "D♯♯") + text.text; break;
-            case 31: text.text = qsTranslate("InspectorAmbitus", "A♯♯") + text.text; break;
-            case 32: text.text = qsTranslate("InspectorAmbitus", "E♯♯") + text.text; break;
-            case 33: text.text = qsTranslate("InspectorAmbitus", "B♯♯") + text.text; break;
-            default: text.text = qsTr("?")   + text.text; break;
+         switch (notes[i].pitch) {
+            // Notations for Chiwoniso's mbira in the Key of Gb (aka F#)
+            case 78: text.text = qsTr("1'") + text.text; break; //G♭
+            case 77: text.text = qsTr("4'") + text.text; break; //F
+            case 75: text.text = qsTr("3'") + text.text; break; //E♭
+            case 73: text.text = qsTr("2'") + text.text; break; //D♭
+            case 70: text.text = qsTr("L4") + text.text; break; //B♭
+            case 68: text.text = qsTr("L3") + text.text; break; //A♭
+            case 66: text.text = qsTr("L2") + text.text; break; //G♭
+            case 65: text.text = qsTr("R4") + text.text; break; //F
+            case 63: text.text = qsTr("R3") + text.text; break; //E♭
+            case 61: text.text = qsTr("R2") + text.text; break; //D♭
+            case 58: text.text = qsTr("L1") + text.text; break; //B♭
+            case 54: text.text = qsTr("R1") + text.text; break; //G♭
+
+            default: text.text = qsTr("?") + text.text; break;
+
+            // Alternatively, you can label each note with its pitch value:
+            //default: text.text = qsTr("" + notes[i].pitch) + text.text; break;
          } // end switch tpc
 
-         // octave, middle C being C4
-         //text.text += (Math.floor(notes[i].pitch / 12) - 1)
-         // or
-         //text.text += (Math.floor(notes[i].ppitch / 12) - 1)
-
-// change below false to true for courtesy- and microtonal accidentals
-// you might need to come up with suitable translations
-// only #, b, natural and possibly also ## seem to be available in UNICODE
-         if (false) {
-            switch (notes[i].userAccidental) {
-               case  0: break;
-               case  1: text.text = qsTranslate("accidental", "Sharp") + text.text; break;
-               case  2: text.text = qsTranslate("accidental", "Flat") + text.text; break;
-               case  3: text.text = qsTranslate("accidental", "Double sharp") + text.text; break;
-               case  4: text.text = qsTranslate("accidental", "Double flat") + text.text; break;
-               case  5: text.text = qsTranslate("accidental", "Natural") + text.text; break;
-               case  6: text.text = qsTranslate("accidental", "Flat-slash") + text.text; break;
-               case  7: text.text = qsTranslate("accidental", "Flat-slash2") + text.text; break;
-               case  8: text.text = qsTranslate("accidental", "Mirrored-flat2") + text.text; break;
-               case  9: text.text = qsTranslate("accidental", "Mirrored-flat") + text.text; break;
-               case 10: text.text = qsTranslate("accidental", "Mirrored-flat-slash") + text.text; break;
-               case 11: text.text = qsTranslate("accidental", "Flat-flat-slash") + text.text; break;
-               case 12: text.text = qsTranslate("accidental", "Sharp-slash") + text.text; break;
-               case 13: text.text = qsTranslate("accidental", "Sharp-slash2") + text.text; break;
-               case 14: text.text = qsTranslate("accidental", "Sharp-slash3") + text.text; break;
-               case 15: text.text = qsTranslate("accidental", "Sharp-slash4") + text.text; break;
-               case 16: text.text = qsTranslate("accidental", "Sharp arrow up") + text.text; break;
-               case 17: text.text = qsTranslate("accidental", "Sharp arrow down") + text.text; break;
-               case 18: text.text = qsTranslate("accidental", "Sharp arrow both") + text.text; break;
-               case 19: text.text = qsTranslate("accidental", "Flat arrow up") + text.text; break;
-               case 20: text.text = qsTranslate("accidental", "Flat arrow down") + text.text; break;
-               case 21: text.text = qsTranslate("accidental", "Flat arrow both") + text.text; break;
-               case 22: text.text = qsTranslate("accidental", "Natural arrow down") + text.text; break;
-               case 23: text.text = qsTranslate("accidental", "Natural arrow up") + text.text; break;
-               case 24: text.text = qsTranslate("accidental", "Natural arrow both") + text.text; break;
-               case 25: text.text = qsTranslate("accidental", "Sori") + text.text; break;
-               case 26: text.text = qsTranslate("accidental", "Koron") + text.text; break;
-               default: text.text = qsTr("?") + text.text; break;
-            } // end switch userAccidental
-         } // end if courtesy- and microtonal accidentals
       } // end for note
-   }
+   } // end nameChord
 
    onRun: {
       if (typeof curScore === 'undefined')

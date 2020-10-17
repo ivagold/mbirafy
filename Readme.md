@@ -1,16 +1,21 @@
-This Plugin for MuseScore is derived from the [Note Names plugin](http://musescore.org/en/handbook/plugins#notenames) that comes as part of MuseScore and is meant to replace that.
-It adds the note names of all notes in either the current selection or all voices of all staves in the entire score as staff text (above/below the staff) and uses note names according to the locale MuseScore is configured for rather than just the English note names C, D, E, F, G, A, B.
-So the output changes with the setting of Menu -> Edit -> Preferences... -> General -> Language, resp. if that is set to 'System', the output depends on the language setting of your PC.
-As a further extensions it also names notes with sharps, double sharps and double flats and the notename moves aside a bit, if it would otherwise collide with the note.
+# Mbirafy: *Turn your MIDIs into Mbira/Kalimba tabs!*
 
-Available locales: English, German, Dutch, Japanese, Italian, French, Spanish, Portuguese, Russian, Romainan, Danish, Norwegian, Swedish, Polish, Slovak, Czech and Greek.
+This is a plugin for [MuseScore 3](https://musescore.org). It's a fork of the [notenames plugin](https://github.com/Jojo-Schmitz/notenames), but instead of labelling notes with English note names (A, B, C, ...), it labes them with numbers that correspond to to mbira lammellae (keys/tines). I'm using it to apply Berliner notation to my music, but it can be used for any notation you prefer.
 
-The double sharp and double flat notes as well as Fb, Cb, E# and B# still need translation into Spanish, Portuguese, Russian, Romanian and Greek, help is more than welcome.
+It adds labels to all notes in either the current selection or all voices of all staves in the entire score as staff text (above/below the staff).
 
-If you also want it to show courtesy- and microtonal accidentals, change `false` to `true` in the plugin code. Note however, that none of these have yet been translated, and their 'clear text' names can be rather long (e.g. "mirrored-flat-slash").
+This is a WORK IN PROGRESS. More to come soon.
 
-If you want a separator different from ",", change the corresponding variable in the plugin code, you can also change it to "\n" to get the note names stacked vertically, but in that case most probably also need to modify the position it gets printed.
+**How I make mbira tabs from recordings:**
+I start by creating a MIDI of the song using [AnthemScore](https://lunaverus.com). Then, I import the MIDI into MuseScore, and use this plugin to generate the numeric tablature. From there, I like to use that to build tabs in [Sympathetic Resonances](https://sympathetic-resonances.org).
 
+### Installation:
 To use the plugin, you must first install it according to the [instructions in the Handbook](http://musescore.org/en/handbook/plugins "Handbook").
 
-The idea for this plugin stems from a [discussion in the forum](http://musescore.org/en/node/16786), the microtonal extension from [another discussion in the forum](http://musescore.org/en/node/16870).
+### Usage notes:
+If you want a separator different from ",", change the corresponding variable in the plugin code. You can also change it to "\n" to get the note names stacked vertically, but in that case most probably also need to modify the position it gets printed.
+
+## Thanks:
+Many thanks to the original creators & contributors of the [notenames plugin](https://github.com/Jojo-Schmitz/notenames). I started this code by forking that plugin; they did the hard work that makes it easy to every note with a text value. Very helpful!
+
+I got the idea for this plugin after reading Jojo-Schmitz's [comments on this post](https://musescore.org/en/node/267863). He pointed out that the notenames plugin could be modified to do exactly what I want.

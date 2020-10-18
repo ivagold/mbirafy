@@ -38,26 +38,37 @@ MuseScore {
          // To determine what pitch values to use, refer to this chart:
          // https://musescore.github.io/MuseScore_PluginAPI_Docs/plugins/html/pitch.html
 
-         switch (notes[i].pitch) {
-            // Notations for Chiwoniso's mbira in the Key of Gb (aka F#)
-            case 78: text.text = qsTr("1'") + text.text; break; //G♭
-            case 77: text.text = qsTr("4'") + text.text; break; //F
-            case 75: text.text = qsTr("3'") + text.text; break; //E♭
-            case 73: text.text = qsTr("2'") + text.text; break; //D♭
-            case 70: text.text = qsTr("L4") + text.text; break; //B♭
-            case 68: text.text = qsTr("L3") + text.text; break; //A♭
-            case 66: text.text = qsTr("L2") + text.text; break; //G♭
-            case 65: text.text = qsTr("R4") + text.text; break; //F
-            case 63: text.text = qsTr("R3") + text.text; break; //E♭
-            case 61: text.text = qsTr("R2") + text.text; break; //D♭
-            case 58: text.text = qsTr("L1") + text.text; break; //B♭
-            case 54: text.text = qsTr("R1") + text.text; break; //G♭
+         // Berliner notation for Chiwoniso's mbira in the Key of Gb (aka F#):
+         var fsharpNyungaNyungaMbira = {
+            78: "1'", //G♭
+            77: "4'", //F
+            75: "3'", //E♭
+            73: "2'", //D♭
+            70: "L4", //B♭
+            68: "L3", //A♭
+            66: "L2", //G♭
+            65: "R4", //F
+            63: "R3", //E♭
+            61: "R2", //D♭
+            58: "L1", //B♭
+            54: "R1", //G♭
+            "allOthers": "?"
+         };
 
-            default: text.text = qsTr("?") + text.text; break;
+         // Label each note with its pitch value (for making additional maps):
+         var printPitchValues = {
+            "allOthers": "" + notes[i].pitch
+         };
 
-            // Alternatively, you can label each note with its pitch value:
-            //default: text.text = qsTr("" + notes[i].pitch) + text.text; break;
-         } // end switch tpc
+         var noteMap = fsharpNyungaNyungaMbira;
+         //var noteMap = printPitchValues;
+
+         for (var item in noteMap) {
+            if (item == notes[i].pitch || item == "allOthers") {
+               text.text = qsTr(noteMap[item]) + text.text;
+               break;
+            }
+         }
 
       } // end for note
    } // end nameChord
